@@ -4,7 +4,7 @@ import logo from './logo.svg';
 import './App.css';
 
 
-function App(props) {
+const App = (props) => {
 
     return (
         <div className="App">
@@ -19,30 +19,30 @@ function App(props) {
 }
 
 // the component I want to show or hide
-function MyNewComponent(props){
+const MyNewComponent = (props) => {
     return props.show ? <p>this is a thing</p> : null;
-}
+};
 
-//the button that drives it
-function MyButton(props){
+//the button that drives the component's visibility
+const MyButton = (props) => {
     return <button onClick={e => {
         e.preventDefault();
         props.dispatch(show());
     }}>
         Activate Lasers
     </button>;
-}
+};
 
 // convert state from redux to props for the component we want to alter
 const mapStateToProps = state => {
-    console.log("State is: ", state.shown)
     return {
         show: state.shown
     }
 };
 
-export function show() {
-    console.log('clicked');
+// the action creator
+const show = () => {
+    localStorage.setItem("shown", JSON.stringify(true));
     return { type: 'SHOW' }
 }
 

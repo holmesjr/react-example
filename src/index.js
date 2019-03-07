@@ -7,10 +7,11 @@ import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 
 const initialState = {
-    shown: false
+    shown: localStorage.getItem("shown")
 };
 
-function theApp(state = initialState, action) {
+//the reducer
+const theApp = (state = initialState, action) => {
 
     switch (action.type) {
         case 'SHOW':
@@ -20,7 +21,7 @@ function theApp(state = initialState, action) {
         default:
             return state;
     }
-}
+};
 
 const store = createStore(theApp);
 
