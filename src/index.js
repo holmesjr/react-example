@@ -7,6 +7,8 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga'
 
+import watchForShowSaga from './saga';
+
 const initialState = {
     shown: localStorage.getItem("shown")
 };
@@ -24,17 +26,13 @@ const theApp = (state = initialState, action) => {
     }
 };
 
-function* theSaga() {
-    console.log('Hello Sagas!')
-}
 
 const sagaMiddleware = createSagaMiddleware();
 
 const store = createStore(theApp, applyMiddleware(sagaMiddleware));
 
-sagaMiddleware.run(theSaga);
-
-const action = type => store.dispatch({type}); // TODO: Figure this out
+//start running the watcher right away
+sagaMiddleware.run(watchForShowSaga);
 
 ReactDOM.render(
     <Provider store={store}>

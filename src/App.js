@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import logo from './logo.svg';
 import './App.css';
 
-
 const App = (props) => {
 
     return (
@@ -27,7 +26,7 @@ const MyNewComponent = (props) => {
 const MyButton = (props) => {
     return <button onClick={e => {
         e.preventDefault();
-        props.dispatch(show());
+        props.dispatch({type: "SHOW_ASYNC"});
     }}>
         Activate Lasers
     </button>;
@@ -38,12 +37,6 @@ const mapStateToProps = (state) => {
     return {
         show: state.shown
     }
-};
-
-// the action creator
-const show = () => {
-    localStorage.setItem("shown", JSON.stringify(true));
-    return { type: 'SHOW' }
 };
 
 const ShownOrHiddenMyNewComponent = connect(mapStateToProps)(MyNewComponent);
