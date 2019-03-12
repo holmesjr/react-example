@@ -12,6 +12,5 @@ export function* doShow() {
 
 // the action creator
 const show = () => {
-    localStorage.setItem("shown", JSON.stringify(true));
     return { type: 'SHOW' }
 };

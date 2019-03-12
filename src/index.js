@@ -4,10 +4,18 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { createStore, applyMiddleware } from 'redux';
+import { persistStore, persistReducer } from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga'
+import { PersistGate } from 'redux-persist/integration/react'
 
 import watchForShowSaga from './saga';
+
+const persistConfig = {
+    key: 'root',
+    storage,
+};
 
 const initialState = {
     shown: localStorage.getItem("shown")
@@ -26,17 +34,22 @@ const theApp = (state = initialState, action) => {
     }
 };
 
+// wrap persistence around the reducer
+const persistedReducer = persistReducer(persistConfig, theApp);
 
 const sagaMiddleware = createSagaMiddleware();
 
-const store = createStore(theApp, applyMiddleware(sagaMiddleware));
+const store = createStore(persistedReducer, applyMiddleware(sagaMiddleware));
+let persistor = persistStore(store);
 
 //start running the watcher right away
 sagaMiddleware.run(watchForShowSaga);
 
 ReactDOM.render(
     <Provider store={store}>
-        <App />
+        <PersistGate loading={null} persistor={persistor}>
+            <App />
+        </PersistGate>
     </Provider>,
     document.getElementById('root')
 );
