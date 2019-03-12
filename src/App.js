@@ -16,7 +16,7 @@ const App = (props) => {
             </header>
         </div>
     );
-}
+};
 
 // the component I want to show or hide
 const MyNewComponent = (props) => {
@@ -34,7 +34,7 @@ const MyButton = (props) => {
 };
 
 // convert state from redux to props for the component we want to alter
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     return {
         show: state.shown
     }
@@ -44,7 +44,7 @@ const mapStateToProps = state => {
 const show = () => {
     localStorage.setItem("shown", JSON.stringify(true));
     return { type: 'SHOW' }
-}
+};
 
 const ShownOrHiddenMyNewComponent = connect(mapStateToProps)(MyNewComponent);
 const ConnectedButton = connect()(MyButton);

@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { createStore } from 'redux'
-import { Provider } from 'react-redux'
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import createSagaMiddleware from 'redux-saga'
 
 const initialState = {
     shown: localStorage.getItem("shown")
@@ -23,7 +24,17 @@ const theApp = (state = initialState, action) => {
     }
 };
 
-const store = createStore(theApp);
+function* theSaga() {
+    console.log('Hello Sagas!')
+}
+
+const sagaMiddleware = createSagaMiddleware();
+
+const store = createStore(theApp, applyMiddleware(sagaMiddleware));
+
+sagaMiddleware.run(theSaga);
+
+const action = type => store.dispatch({type}); // TODO: Figure this out
 
 ReactDOM.render(
     <Provider store={store}>
