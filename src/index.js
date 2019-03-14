@@ -18,7 +18,7 @@ const persistConfig = {
 };
 
 const initialState = {
-    shown: localStorage.getItem("shown")
+    shown: false
 };
 
 //the reducer
