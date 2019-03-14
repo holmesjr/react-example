@@ -18,7 +18,7 @@ const App = (props) => {
 };
 
 // the component I want to show or hide
-const MyNewComponent = (props) => {
+export const MyNewComponent = (props) => {
     return props.show ? <p>this is a thing</p> : null;
 };
 
@@ -33,7 +33,7 @@ const MyButton = (props) => {
 };
 
 // convert state from redux to props for the component we want to alter
-const mapStateToProps = (state) => {
+export const mapStateToProps = (state) => {
     return {
         show: state.shown
     }
