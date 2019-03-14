@@ -26,7 +26,7 @@ const MyNewComponent = (props) => {
 const MyButton = (props) => {
     return <button onClick={e => {
         e.preventDefault();
-        props.dispatch({type: "SHOW_ASYNC"});
+        props.dispatch({type: "BUTTON_CLICKED"});
     }}>
         Activate Lasers
     </button>;

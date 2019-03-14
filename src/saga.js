@@ -4,12 +4,14 @@ import * as axios from "axios";
 
 //the watcher saga
 export default function* watchForShowSaga() {
-    yield takeEvery('SHOW_ASYNC', doShow)
+    yield takeEvery('BUTTON_CLICKED', doShow)
 }
 
 // the async action
 export function* doShow() {
+
     yield call(() => console.log("Starting the saga"));
+
     yield put(show());
 
     const token = yield call(() => axios({
@@ -21,6 +23,7 @@ export function* doShow() {
         }),
         headers: { 'content-type': 'application/x-www-form-urlencoded' }
     }));
+
     yield call(() => console.log(token.data));
 }
 
