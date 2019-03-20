@@ -9,29 +9,13 @@ import storage from 'redux-persist/lib/storage'
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga'
 import { PersistGate } from 'redux-persist/integration/react'
+import { theApp } from './reducer'
 
 import watchForShowSaga from './saga';
 
 const persistConfig = {
     key: 'root',
     storage,
-};
-
-const initialState = {
-    shown: false
-};
-
-//the reducer
-const theApp = (state = initialState, action) => {
-
-    switch (action.type) {
-        case 'SHOW':
-            return Object.assign({}, state, {
-                shown: true
-            });
-        default:
-            return state;
-    }
 };
 
 // wrap persistence around the reducer

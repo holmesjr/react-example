@@ -1,5 +1,5 @@
 import React from 'react';
-import {mapStateToProps, MyNewComponent} from './App';
+import { mapStateToProps, MyNewComponent } from './myNewComponent';
 
 describe('MyNewComponent', () => {
 

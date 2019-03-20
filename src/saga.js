@@ -21,10 +21,22 @@ export function* doShow() {
             username: 'bob',
             password: 'bobspassword'
         }),
-        headers: { 'content-type': 'application/x-www-form-urlencoded' }
+        headers: {
+            "content-type": "application/x-www-form-urlencoded"
+        }
     }));
 
     yield call(() => console.log(token.data));
+
+    const dataResponse = yield call(() => axios({
+        method: 'get',
+        url: 'https://localhost:8443/',
+        headers: {
+            "Authorization": "Bearer " + token.data
+        }
+    }));
+
+    yield call(() => console.log(dataResponse));
 }
 
 // the action creator
