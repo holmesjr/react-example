@@ -7,14 +7,25 @@ export default function* watchForShowSaga() {
     yield takeEvery('BUTTON_CLICKED', doShow)
 }
 
+
 // the async action
 export function* doShow() {
 
-    yield call(() => console.log("Starting the saga"));
+    yield call(logStart);
 
     yield put(show());
 
-    const token = yield call(() => axios({
+    const token = yield call(authenticatePost);
+
+    const dataResponse = yield call(dataGet, token.data);
+
+    yield call(() => console.log(dataResponse));
+}
+
+export const logStart = () => console.log("Starting the saga");
+
+export const authenticatePost = () => {
+    return () => axios({
         method: 'post',
         url: 'https://localhost:8443/authenticate',
         data: qs.stringify({
@@ -24,20 +35,16 @@ export function* doShow() {
         headers: {
             "content-type": "application/x-www-form-urlencoded"
         }
-    }));
+    });
+};
 
-    yield call(() => console.log(token.data));
-
-    const dataResponse = yield call(() => axios({
-        method: 'get',
-        url: 'https://localhost:8443/',
-        headers: {
-            "Authorization": "Bearer " + token.data
-        }
-    }));
-
-    yield call(() => console.log(dataResponse));
-}
+export const dataGet = (tokenString) => axios({
+    method: 'get',
+    url: 'https://localhost:8443/',
+    headers: {
+        "Authorization": "Bearer " + tokenString
+    }
+});
 
 // the action creator
 const show = () => {
